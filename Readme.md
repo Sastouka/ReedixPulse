@@ -4,7 +4,7 @@
 
 Développé par **Sastouka Digital**, cet outil permet de centraliser le flux de travail médical, administratif et financier dans une interface ultra-moderne et fluide.
 
-![Aperçu ReedixPulse](img4.png)
+![Aperçu ReedixPulse](img3.png)
 
 ## 🌟 Points Forts
 
