@@ -132,6 +132,7 @@
 
         .fab-windows { background: linear-gradient(135deg, #00a4ef, #0072FF); }
         .fab-android { background: linear-gradient(135deg, #a4c639, #38ef7d); }
+        .fab-wa { background: linear-gradient(135deg, #25D366, #128C7E); }
 
         .fab-label {
             position: absolute;
@@ -381,15 +382,38 @@
             .fab-container { transform: scale(0.8); bottom: 10px; right: 10px; }
         }
     </style>
+
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', 'VOTRE_ID_DE_PIXEL_ICI'); /* Pense à remplacer cette valeur par ton ID réel */
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=VOTRE_ID_DE_PIXEL_ICI&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
+
 </head>
 <body>
 
     <div class="fab-container">
-        <a href="https://github.com/Sastouka/ReedixPulse/releases/download/v1.0.0/ReedixPulse.zip" class="fab-btn fab-windows" title="Télécharger pour Windows">
+        <a href="https://wa.me/212652084735" class="fab-btn fab-wa" title="Contactez-nous sur WhatsApp" onclick="fbq('track', 'Contact');">
+            <span class="fab-label">Contactez-nous</span>
+            <i class="fa-brands fa-whatsapp"></i>
+        </a>
+        <a href="https://github.com/Sastouka/ReedixPulse/releases/download/v1.0.0/ReedixPulse.zip" class="fab-btn fab-windows" title="Télécharger pour Windows" onclick="fbq('trackCustom', 'DownloadWindows');">
             <span class="fab-label">Télécharger pour Windows</span>
             <i class="fa-brands fa-windows"></i>
         </a>
-        <a href="https://github.com/Sastouka/ReedixPulse/releases/download/v1.0.0/ReedixPulse.apk" class="fab-btn fab-android" title="Télécharger pour Android">
+        <a href="https://github.com/Sastouka/ReedixPulse/releases/download/v1.0.0/ReedixPulse.apk" class="fab-btn fab-android" title="Télécharger pour Android" onclick="fbq('trackCustom', 'DownloadAndroid');">
             <span class="fab-label">Télécharger pour Android</span>
             <i class="fa-brands fa-android"></i>
         </a>
@@ -404,7 +428,7 @@
             <a href="#specialite">Votre Spécialité</a>
             <a href="#fonctionnalites">Fonctionnalités</a>
             <a href="guide.html">Guide</a>
-            <a href="https://wa.me/212652084735" class="btn-primary">Obtenir la licence</a>
+            <a href="https://wa.me/212652084735" class="btn-primary" onclick="fbq('track', 'Lead');">Obtenir la licence</a>
         </div>
     </nav>
 
@@ -414,7 +438,7 @@
                 <h1>L'excellence du suivi <span>par séances.</span></h1>
                 <p>La solution logicielle sur-mesure pour les centres de rééducation. Gérez vos patients, vos forfaits de séances et votre facturation avec une précision inégalée.</p>
                 <div class="hero-buttons">
-                    <a href="https://wa.me/212652084735" class="btn-primary" style="font-size: 1.1rem; padding: 16px 35px;"><i class="fa-solid fa-rocket" style="margin-right: 8px;"></i> Démarrer maintenant</a>
+                    <a href="https://wa.me/212652084735" class="btn-primary" style="font-size: 1.1rem; padding: 16px 35px;" onclick="fbq('track', 'Lead');"><i class="fa-solid fa-rocket" style="margin-right: 8px;"></i> Démarrer maintenant</a>
                     <a href="guide.html" class="btn-primary" style="background: white; color: var(--primary) !important; border: 2px solid #e2e8f0; box-shadow: none;">Voir le guide</a>
                 </div>
             </div>
@@ -498,7 +522,7 @@
                     <h3>Disponible sur Windows & Android</h3>
                     <p>Que vous soyez à l'accueil sur le PC du cabinet ou en salle de soin avec votre tablette, ReedixPulse s'adapte à votre matériel.</p>
                     <p>Un design <strong>Responsive et Fluide</strong> qui rend l'expérience utilisateur exceptionnelle sur tous les supports.</p>
-                    <a href="https://wa.me/212652084735" class="btn-primary" style="margin-top: 15px;"><i class="fa-solid fa-download" style="margin-right: 8px;"></i> Obtenir la solution</a>
+                    <a href="https://wa.me/212652084735" class="btn-primary" style="margin-top: 15px;" onclick="fbq('track', 'Lead');"><i class="fa-solid fa-download" style="margin-right: 8px;"></i> Obtenir la solution</a>
                 </div>
                 <div class="showcase-img">
                     <img src="img1.png" alt="ReedixPulse multiplateforme">
@@ -528,7 +552,7 @@
                 <h4>Ressources</h4>
                 <ul>
                     <li><a href="guide.html"><i class="fa-solid fa-book" style="width: 20px;"></i> Guide d'utilisation</a></li>
-                    <li><a href="https://wa.me/212652084735"><i class="fa-brands fa-whatsapp" style="width: 20px;"></i> Support Technique</a></li>
+                    <li><a href="https://wa.me/212652084735" onclick="fbq('track', 'Contact');"><i class="fa-brands fa-whatsapp" style="width: 20px;"></i> Support Technique</a></li>
                 </ul>
             </div>
             
