@@ -51,7 +51,7 @@
 
         /* Navbar Glassmorphism */
         nav {
-            position: fixed;
+            position: absolute; /* Modifié ici : la barre ne suit plus le défilement */
             top: 20px;
             left: 50%;
             transform: translateX(-50%);
@@ -170,14 +170,14 @@
             padding: 20px;
             box-shadow: 0 -10px 30px rgba(0,0,0,0.1);
             z-index: 9999;
-            transform: translateY(100%); /* Cache complètement la bannière vers le bas, peu importe sa hauteur */
+            transform: translateY(100%);
             transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             justify-content: center;
         }
         
         .cookie-banner.show {
-            transform: translateY(0); /* Remonte la bannière à sa position normale */
+            transform: translateY(0);
         }
 
         .cookie-content {
