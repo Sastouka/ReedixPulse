@@ -167,11 +167,18 @@
             color: var(--text); 
             font-size: 2.2rem; 
             font-weight: 800;
-            margin-bottom: 30px; 
+            margin-bottom: 10px; 
             display: flex; 
             align-items: center; 
             gap: 20px;
             letter-spacing: -1px;
+        }
+
+        section > p.section-intro {
+            font-size: 1.1rem;
+            color: var(--light-text);
+            margin-bottom: 30px;
+            padding-left: 75px; /* Aligné avec le texte du h2 */
         }
         
         section h2 .icon-box {
@@ -197,7 +204,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
-            margin-top: 30px;
+            margin-top: 20px;
         }
 
         .card {
@@ -206,19 +213,45 @@
             border-radius: 25px;
             border: 1px solid #f1f5f9;
             transition: all 0.3s ease;
+            height: 100%;
         }
         .card:hover { border-color: var(--accent); box-shadow: var(--shadow-sm); transform: translateY(-3px); }
-        .card strong { color: var(--primary); font-size: 1.1rem; display: block; margin-bottom: 10px; }
-        .card p { font-size: 0.95rem; color: var(--light-text); }
+        .card strong { color: var(--primary); font-size: 1.1rem; display: block; margin-bottom: 12px; }
         
+        /* Listes dans les cartes pour le pas-à-pas */
+        .card ul {
+            padding-left: 20px;
+            margin-top: 10px;
+        }
+        .card ul li {
+            font-size: 0.95rem;
+            color: var(--light-text);
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+        .card ul li:last-child { margin-bottom: 0; }
+        
+        .card em {
+            display: block;
+            margin-top: 12px;
+            font-size: 0.85rem;
+            color: var(--secondary);
+            font-style: italic;
+            background: #f0f7ff;
+            padding: 8px 12px;
+            border-radius: 8px;
+            border-left: 3px solid var(--secondary);
+        }
+
         code {
             background: #f1f5f9;
-            padding: 4px 8px;
+            padding: 3px 6px;
             border-radius: 6px;
             font-family: monospace;
             font-weight: bold;
             color: var(--primary);
             border: 1px solid #e2e8f0;
+            font-size: 0.9em;
         }
 
         footer { 
@@ -234,52 +267,31 @@
         /* ==========================================================================
            MEDIA QUERIES (RESPONSIVITÉ)
            ========================================================================== */
-
-        /* Tablettes et écrans moyens */
         @media (max-width: 1024px) {
             .container { flex-direction: column; margin-top: -30px; }
-            
-            nav { 
-                width: 100%; 
-                position: relative; 
-                top: 0; 
-                padding: 25px;
-                border-radius: 25px;
-            }
-            
+            nav { width: 100%; position: relative; top: 0; padding: 25px; border-radius: 25px; }
             nav h3 { text-align: center; margin-bottom: 15px; }
-            
-            nav ul { 
-                display: grid; 
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
-                gap: 15px; 
-            }
+            nav ul { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
             nav ul li { margin-bottom: 0; }
             nav ul li a { justify-content: center; text-align: center; background: white; }
             nav ul li a:hover { transform: translateY(-3px); }
         }
 
-        /* Smartphones (très petits écrans) */
         @media (max-width: 576px) {
             .back-btn { top: 15px; left: 15px; padding: 8px 15px; font-size: 0.9rem; }
-            
             header { padding: 90px 15px 70px; border-bottom-right-radius: 50px; }
             .header-logo { width: 80px; height: 80px; padding: 15px; margin-bottom: 20px; }
             header h1 { font-size: 2.2rem; }
             header p { font-size: 1rem; }
-            
             .container { padding: 0 15px; gap: 20px; margin-top: -20px; }
-            
             nav { padding: 20px; }
             nav ul { grid-template-columns: 1fr; gap: 10px; }
-            
             section { padding: 30px 20px; border-radius: 25px; scroll-margin-top: 20px; }
             section h2 { font-size: 1.6rem; gap: 15px; align-items: flex-start; }
+            section > p.section-intro { padding-left: 0; margin-top: 15px; }
             section h2 .icon-box { width: 45px; height: 45px; font-size: 1.2rem; border-radius: 12px; }
-            
             .feature-grid { grid-template-columns: 1fr; gap: 15px; margin-top: 20px; }
             .card { padding: 20px; border-radius: 20px; }
-            
             code { word-break: break-all; }
         }
     </style>
@@ -300,126 +312,202 @@
     <nav>
         <h3>Navigation</h3>
         <ul>
-            <li><a href="#licence"><i class="fa-solid fa-key"></i> Activation</a></li>
+            <li><a href="#demarrage"><i class="fa-solid fa-rocket"></i> Démarrage</a></li>
             <li><a href="#patients"><i class="fa-solid fa-users"></i> Patients</a></li>
-            <li><a href="#factures"><i class="fa-solid fa-file-invoice"></i> Facturation</a></li>
             <li><a href="#agenda"><i class="fa-regular fa-calendar-days"></i> Agenda</a></li>
-            <li><a href="#stats"><i class="fa-solid fa-chart-line"></i> Statistiques</a></li>
-            <li><a href="#donnees"><i class="fa-solid fa-shield-halved"></i> Sécurité</a></li>
+            <li><a href="#facturation"><i class="fa-solid fa-file-invoice"></i> Facturation</a></li>
+            <li><a href="#statistiques"><i class="fa-solid fa-chart-pie"></i> Statistiques</a></li>
+            <li><a href="#securite"><i class="fa-solid fa-shield-halved"></i> Sécurité</a></li>
         </ul>
     </nav>
 
     <main>
-        <section id="licence">
-            <h2><div class="icon-box"><i class="fa-solid fa-key"></i></div> Licence Premium</h2>
-            <p>Profitez d'une gestion multi-compte sécurisée et d'un accès sans limites.</p>
+        <section id="demarrage">
+            <h2><div class="icon-box"><i class="fa-solid fa-rocket"></i></div> Premiers Pas & Configuration</h2>
+            <p class="section-intro">Paramétrez votre cabinet en quelques minutes pour une utilisation optimale.</p>
             <div class="feature-grid">
                 <div class="card">
-                    <strong>Période d'essai</strong>
-                    Découvrez l'intégralité des fonctions ReedixPulse pendant 7 jours gratuitement dès votre première connexion.
+                    <strong>Étape 1 : Connexion et Licence</strong>
+                    <ul>
+                        <li>Lors de la première ouverture de ReedixPulse, vous bénéficiez d'une <b>période d'essai gratuite de 7 jours</b>.</li>
+                        <li>Pour activer une licence définitive, rendez-vous dans les <b>Paramètres</b>.</li>
+                        <li>Entrez la clé unique fournie par Sastouka Digital (ex: <code>PM-XX-XXXX-XXXX</code>). Cette clé est liée à votre adresse e-mail.</li>
+                    </ul>
                 </div>
                 <div class="card">
-                    <strong>Plans flexibles</strong>
-                    Choisissez entre un accès mensuel, annuel ou optez pour la sérénité totale avec la licence à vie.
+                    <strong>Étape 2 : Profil de votre Cabinet</strong>
+                    <ul>
+                        <li>Toujours dans les <b>Paramètres</b>, remplissez les informations de votre établissement : Nom, Adresse, et Téléphone.</li>
+                    </ul>
+                    <em>Astuce Sastouka : Ces informations apparaîtront automatiquement sur l'en-tête de toutes vos factures.</em>
                 </div>
                 <div class="card">
-                    <strong>Activation Sécurisée</strong>
-                    Votre clé <code>PM-XX-XXXX-XXXX</code> est générée de façon unique pour votre identifiant e-mail.
+                    <strong>Étape 3 : Paramétrage de l'Agenda</strong>
+                    <ul>
+                        <li>Allez dans la section <b>Configuration Agenda</b> pour définir vos horaires d'ouverture et de fermeture.</li>
+                        <li>Réglez l'<b>intervalle de rendez-vous</b> (ex : 15, 30 ou 45 min) pour l'adapter à la durée de vos consultations.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <strong>Étape 4 : Le Papier à En-tête</strong>
+                    <ul>
+                        <li>Pour une image professionnelle, importez votre propre design de papier à en-tête (image A4) depuis les Paramètres.</li>
+                        <li>Ce fond sera incrusté automatiquement derrière chaque facture et programme généré en PDF.</li>
+                    </ul>
                 </div>
             </div>
         </section>
 
         <section id="patients">
-            <h2><div class="icon-box"><i class="fa-solid fa-users"></i></div> Espace Patients</h2>
-            <p>Une interface fluide pour une gestion centrée sur l'humain.</p>
+            <h2><div class="icon-box"><i class="fa-solid fa-users"></i></div> Gestion des Patients</h2>
+            <p class="section-intro">Créez, retrouvez et gérez le profil et le portefeuille de chaque patient.</p>
             <div class="feature-grid">
                 <div class="card">
-                    <strong>Identité Visuelle</strong>
-                    L'application génère des dossiers avec une ergonomie intuitive, incluant un système d'ID unique modifiable.
+                    <strong>Étape 1 : Ajouter un Patient</strong>
+                    <ul>
+                        <li>Allez dans <b>Patients</b> via le menu principal et cliquez sur <b>"Ajouter un Nouveau Patient"</b>.</li>
+                        <li>Le système génère un ID unique (ex: <code>P-4937221</code>), modifiable selon votre propre nomenclature.</li>
+                        <li>Renseignez le nom, l'âge, le téléphone et les antécédents, puis enregistrez.</li>
+                    </ul>
                 </div>
                 <div class="card">
-                    <strong>Avances & Crédits</strong>
-                    Gérez les portefeuilles patients. Encaissez des avances et déduisez-les lors de la facturation finale.
+                    <strong>Étape 2 : Rechercher un Dossier</strong>
+                    <ul>
+                        <li>Utilisez la barre de recherche intelligente.</li>
+                        <li>Tapez le nom, le numéro de téléphone ou l'ID complet. Le filtrage des cartes patients s'effectue instantanément.</li>
+                    </ul>
                 </div>
                 <div class="card">
-                    <strong>Filtrage Instantané</strong>
-                    Retrouvez n'importe quel dossier en une seconde grâce à la recherche prédictive multi-critères.
-                </div>
-            </div>
-        </section>
-
-        <section id="factures">
-            <h2><div class="icon-box"><i class="fa-solid fa-file-invoice"></i></div> Facturation Haute Précision</h2>
-            <p>Créez des documents comptables d'une qualité irréprochable.</p>
-            <div class="feature-grid">
-                <div class="card">
-                    <strong>Automatisation</strong>
-                    Numérotation chronologique intelligente basée sur l'année fiscale en cours (ex: 2026-0001).
-                </div>
-                <div class="card">
-                    <strong>Multi-séances</strong>
-                    Fusionnez plusieurs rendez-vous sur une seule facture. Le système recalcule les taxes et les totaux dynamiquement.
-                </div>
-                <div class="card">
-                    <strong>Papier à en-tête</strong>
-                    Importez votre design A4. Il sera automatiquement intégré en fond de tous vos exports PDF.
+                    <strong>Étape 3 : Gérer le Portefeuille (Avances)</strong>
+                    <ul>
+                        <li>Sur la carte d'un patient, cliquez sur l'icône verte représentant un <b>Portefeuille</b>.</li>
+                        <li>Pour encaisser : Saisissez le montant perçu et validez. L'avance est historisée.</li>
+                    </ul>
+                    <em>Note : Ces avances seront automatiquement déduites du "Net à Payer" lors de l'édition d'une facture.</em>
                 </div>
             </div>
         </section>
 
         <section id="agenda">
-            <h2><div class="icon-box"><i class="fa-regular fa-calendar-days"></i></div> Agenda Connecté</h2>
-            <p>Optimisez votre temps et restez en contact avec vos patients.</p>
+            <h2><div class="icon-box"><i class="fa-regular fa-calendar-days"></i></div> L'Agenda Intelligent</h2>
+            <p class="section-intro">Organisez vos journées, planifiez vos protocoles et communiquez facilement.</p>
             <div class="feature-grid">
                 <div class="card">
-                    <strong>Intervalles Sur-mesure</strong>
-                    Configurez vos créneaux (15, 30, 45 min) pour qu'ils correspondent exactement à votre rythme de travail.
+                    <strong>Étape 1 : Rendez-vous Unique</strong>
+                    <ul>
+                        <li>Depuis l'<b>Agenda</b>, cliquez sur <b>"Nouveau Prog."</b>.</li>
+                        <li>Recherchez votre patient (ou créez-le à la volée).</li>
+                        <li>Choisissez l'option <b>RDV Unique</b>, sélectionnez l'heure libre souhaitée et validez.</li>
+                    </ul>
                 </div>
                 <div class="card">
-                    <strong>Rappels WhatsApp</strong>
-                    D'un simple clic, envoyez un message personnalisé pour confirmer un rendez-vous et limiter l'absentéisme.
+                    <strong>Étape 2 : Programme Multi-séances</strong>
+                    <ul>
+                        <li>Lors de l'ajout, choisissez l'onglet <b>Programme</b>.</li>
+                        <li>Définissez le nombre total de séances (ex: 10), les jours de la semaine (ex: Lundi et Jeudi) et l'heure.</li>
+                        <li>ReedixPulse scannera l'agenda et placera les séances automatiquement sur les créneaux disponibles.</li>
+                    </ul>
                 </div>
                 <div class="card">
-                    <strong>Flux de travail</strong>
-                    Basculez un rendez-vous terminé directement vers l'écran de facturation sans ressaisie de données.
+                    <strong>Étape 3 : Imprévus & Jours Fériés</strong>
+                    <ul>
+                        <li><b>Reporter :</b> Cliquez sur le statut d'un RDV, passez-le en "Reportée" et choisissez la nouvelle date.</li>
+                        <li><b>Fermeture / Férié :</b> Cliquez sur le bouton rouge en haut. Toutes les séances du jour seront décalées à la fin de leurs programmes respectifs !</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <strong>Étape 4 : Rappels Automatiques</strong>
+                    <ul>
+                        <li>Sur la carte d'un rendez-vous, utilisez les icônes de message (SMS bleu ou WhatsApp vert).</li>
+                        <li>L'application préparera un message de rappel poli avec la date et l'heure exactes. Il ne vous reste qu'à l'envoyer.</li>
+                    </ul>
                 </div>
             </div>
         </section>
 
-        <section id="stats">
-            <h2><div class="icon-box"><i class="fa-solid fa-chart-line"></i></div> Analyse de Performance</h2>
-            <p>Visualisez la croissance de votre activité grâce à des indicateurs puissants.</p>
+        <section id="facturation">
+            <h2><div class="icon-box"><i class="fa-solid fa-file-invoice"></i></div> Facturation & Comptabilité</h2>
+            <p class="section-intro">Transformez le temps de soin en documents comptables légaux et professionnels.</p>
             <div class="feature-grid">
                 <div class="card">
-                    <strong>Graphiques Interactifs</strong>
-                    Suivez l'évolution réelle de vos recettes par jour, mois ou année avec des courbes de tendance.
+                    <strong>Étape 1 : Création Directe</strong>
+                    <ul>
+                        <li>Dans l'agenda, à côté d'un rendez-vous réalisé, cliquez sur l'icône de facture orange.</li>
+                        <li>Cela transfère directement les informations et l'historique du patient vers l'écran de facturation.</li>
+                    </ul>
                 </div>
                 <div class="card">
-                    <strong>Rentabilité par Service</strong>
-                    Identifiez instantanément vos prestations les plus demandées grâce à la répartition par secteurs.
+                    <strong>Étape 2 : Éditer la Facture</strong>
+                    <ul>
+                        <li>La numérotation est chronologique et automatisée (ex: 2026-0001).</li>
+                        <li>Indiquez le service et la quantité, puis entrez le prix unitaire HT. Le Total TTC se calcule tout seul.</li>
+                        <li>Si des acomptes ont été versés, ils seront déduits ici.</li>
+                    </ul>
                 </div>
                 <div class="card">
-                    <strong>Calculateur de KPI</strong>
-                    Consultez votre panier moyen, votre volume de factures et votre CA total en temps réel.
+                    <strong>Étape 3 : Génération du PDF</strong>
+                    <ul>
+                        <li>Une fois validée, générez la facture au format PDF.</li>
+                        <li>Le document intégrera votre papier à en-tête, un tableau détaillé, et un QR Code de validation de la transaction.</li>
+                        <li>Imprimez-le ou partagez-le instantanément.</li>
+                    </ul>
                 </div>
             </div>
         </section>
 
-        <section id="donnees">
-            <h2><div class="icon-box"><i class="fa-solid fa-shield-halved"></i></div> Souveraineté & Données</h2>
-            <p>La sécurité d'un stockage local couplée à la puissance du numérique.</p>
+        <section id="statistiques">
+            <h2><div class="icon-box"><i class="fa-solid fa-chart-pie"></i></div> Statistiques & KPI</h2>
+            <p class="section-intro">Pilotez et analysez la croissance financière de votre activité.</p>
             <div class="feature-grid">
                 <div class="card">
-                    <strong>100% Local</strong>
-                    Rien n'est stocké en ligne. Vos données médicales confidentielles restent sur votre appareil physique.
+                    <strong>Suivi du Chiffre d'Affaires</strong>
+                    <ul>
+                        <li>Sélectionnez la période d'analyse : Aujourd'hui, Ce Mois, ou Cette Année.</li>
+                        <li>Observez la courbe de croissance de vos revenus en temps réel sur le graphique interactif principal.</li>
+                    </ul>
                 </div>
                 <div class="card">
-                    <strong>Sauvegarde ZIP</strong>
-                    Générez une archive complète de votre base de données et de vos PDF pour les mettre à l'abri.
+                    <strong>Répartition par Service</strong>
+                    <ul>
+                        <li>Analysez la répartition de votre CA par type de prestation grâce aux diagrammes circulaires.</li>
+                        <li>Identifiez instantanément les soins les plus rentables ou les plus demandés.</li>
+                    </ul>
                 </div>
                 <div class="card">
-                    <strong>Restauration Express</strong>
-                    Changez d'appareil en un clin d'œil en import simplement votre dernier fichier de sauvegarde ZIP.
+                    <strong>Exportation de Rapports</strong>
+                    <ul>
+                        <li>Besoin de faire votre comptabilité ? Générez un PDF global de vos revenus pour la période sélectionnée.</li>
+                        <li>Ce rapport liste toutes les factures émises et calcule le total cumulé.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="securite">
+            <h2><div class="icon-box"><i class="fa-solid fa-shield-halved"></i></div> Sécurité & Sauvegarde</h2>
+            <p class="section-intro">La confidentialité du stockage local, avec la sécurité du numérique.</p>
+            <div class="feature-grid">
+                <div class="card">
+                    <strong>Note fondamentale : 100% Local</strong>
+                    <ul>
+                        <li>ReedixPulse fonctionne entièrement sur la mémoire de votre machine.</li>
+                        <li>Vos données médicales ne transitent sur aucun serveur. Vous en êtes le seul propriétaire.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <strong>Étape 1 : Créer une Sauvegarde</strong>
+                    <ul>
+                        <li>Allez dans la section <b>Sécurité / Sauvegarde</b> du menu.</li>
+                        <li>Cliquez sur <b>Générer une Archive ZIP</b>. L'application compresse votre base de données et vos PDF.</li>
+                        <li>Enregistrez ce ZIP sur un disque dur externe ou dans votre Cloud personnel.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <strong>Étape 2 : Restaurer les Données</strong>
+                    <ul>
+                        <li>En cas de changement de PC ou de téléphone, réinstallez ReedixPulse et allez dans Sauvegarde.</li>
+                        <li>Choisissez <b>Restaurer depuis un ZIP</b> et sélectionnez votre dernière archive. Tout sera récupéré en quelques secondes.</li>
+                    </ul>
                 </div>
             </div>
         </section>
