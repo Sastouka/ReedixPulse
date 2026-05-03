@@ -157,10 +157,10 @@
         .fab-btn:hover { transform: scale(1.1) translateY(-5px); }
         .fab-btn:hover .fab-label { opacity: 1; transform: translateX(0); }
 
-        /* Cookie Banner */
+        /* Cookie Banner Améliorée */
         .cookie-banner {
             position: fixed;
-            bottom: -150px;
+            bottom: 0;
             left: 0;
             width: 100%;
             background: var(--glass);
@@ -170,13 +170,14 @@
             padding: 20px;
             box-shadow: 0 -10px 30px rgba(0,0,0,0.1);
             z-index: 9999;
-            transition: bottom 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(100%); /* Cache complètement la bannière vers le bas, peu importe sa hauteur */
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             justify-content: center;
         }
         
         .cookie-banner.show {
-            bottom: 0;
+            transform: translateY(0); /* Remonte la bannière à sa position normale */
         }
 
         .cookie-content {
@@ -594,22 +595,35 @@
             const acceptBtn = document.getElementById("accept-cookies");
             const declineBtn = document.getElementById("decline-cookies");
 
-            // Vérifie si le consentement a déjà été donné ou refusé
+            // Fonction pour cacher complètement la bannière du DOM après l'animation
+            function hideBanner() {
+                cookieBanner.classList.remove("show");
+                // On attend 500ms (la durée de la transition CSS) avant de la faire disparaître du flux HTML
+                setTimeout(() => {
+                    cookieBanner.style.display = "none";
+                }, 500);
+            }
+
+            // Vérifie si l'utilisateur a déjà répondu
             if (!localStorage.getItem("cookieConsent")) {
-                // Un léger délai pour une apparition plus douce
                 setTimeout(() => {
                     cookieBanner.classList.add("show");
                 }, 1000);
+            } else {
+                // Si déjà accepté ou refusé avant, on la cache directement
+                cookieBanner.style.display = "none";
             }
 
+            // Action "Accepter"
             acceptBtn.addEventListener("click", function() {
                 localStorage.setItem("cookieConsent", "accepted");
-                cookieBanner.classList.remove("show");
+                hideBanner();
             });
 
+            // Action "Refuser"
             declineBtn.addEventListener("click", function() {
                 localStorage.setItem("cookieConsent", "declined");
-                cookieBanner.classList.remove("show");
+                hideBanner();
             });
         });
     </script>
