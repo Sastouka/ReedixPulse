@@ -3,630 +3,299 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ReedixPulse - Gestion pour Kiné, Orthophonie & Rééducation par séances</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>ReedixPulse - Gestion de Centre Médico-Socio-Éducatif</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: '#000080',
+                        blueElectric: '#0072FF',
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        :root {
-            /* Couleurs de base */
-            --primary: #000080;
-            --secondary: #0072FF;
-            --accent: #00C6FF;
-            --bg: #f8fafc;
-            --surface: rgba(255, 255, 255, 0.85);
-            --text: #0f172a;
-            --light-text: #64748b;
-            --glass: rgba(255, 255, 255, 0.75);
-            --border: rgba(255, 255, 255, 0.4);
-            
-            /* Ombres */
-            --shadow-sm: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-            --shadow-lg: 0 20px 40px -10px rgb(0 0 0 / 0.15);
-            --shadow-glow: 0 10px 30px rgba(0, 114, 255, 0.3);
-
-            /* Couleurs pour les spécialités */
-            --color-kine: #10b981;
-            --color-ortho: #8b5cf6;
-            --color-psycho: #f59e0b;
-            --color-reeduc: #f43f5e;
-            
-            /* Dégradés pour les icônes */
-            --icon-grad-1: linear-gradient(135deg, #FF6B6B, #FF8E53);
-            --icon-grad-2: linear-gradient(135deg, #4E65FF, #92EFFD);
-            --icon-grad-3: linear-gradient(135deg, #11998E, #38EF7D);
-            --icon-grad-4: linear-gradient(135deg, #667EEA, #764BA2);
-            --icon-grad-5: linear-gradient(135deg, #F7971E, #FFD200);
-            --icon-grad-6: linear-gradient(135deg, #EC008C, #FC6767);
+        .gradient-bg {
+            background: linear-gradient(135deg, #000080 0%, #0072FF 100%);
         }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body { 
-            font-family: 'Plus Jakarta Sans', sans-serif; 
-            background: var(--bg);
-            color: var(--text); 
-            line-height: 1.7;
-            overflow-x: hidden;
-        }
-
-        /* Navbar Glassmorphism */
-        nav {
-            position: absolute; /* Modifié ici : la barre ne suit plus le défilement */
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 95%;
-            max-width: 1200px;
-            background: var(--glass);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--border);
-            border-radius: 100px;
-            padding: 15px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: var(--shadow-sm);
-            z-index: 1000;
-            transition: all 0.3s ease;
-        }
-        
-        .nav-logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-            font-weight: 800;
-            font-size: 1.5rem;
-            color: var(--primary);
-        }
-        .nav-logo img { width: 40px; height: 40px; border-radius: 12px; }
-
-        .nav-links { display: flex; gap: 25px; align-items: center; }
-        .nav-links a { text-decoration: none; color: var(--text); font-weight: 600; font-size: 0.95rem; transition: color 0.3s; }
-        .nav-links a:hover { color: var(--secondary); }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white !important;
-            padding: 12px 28px;
-            border-radius: 100px;
-            font-weight: 700;
-            box-shadow: var(--shadow-glow);
-            text-decoration: none;
-            display: inline-block;
-            transition: transform 0.3s, box-shadow 0.3s;
-            text-align: center;
-            border: none;
-            cursor: pointer;
-        }
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 35px rgba(0, 114, 255, 0.4);
-        }
-
-        /* Boutons Flottants (FABs) */
-        .fab-container {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            z-index: 2000;
-            transition: transform 0.3s ease;
-        }
-
-        .fab-btn {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            text-decoration: none;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-        }
-
-        .fab-btn i { font-size: 24px; }
-
-        .fab-windows { background: linear-gradient(135deg, #00a4ef, #0072FF); }
-        .fab-android { background: linear-gradient(135deg, #a4c639, #38ef7d); }
-        .fab-wa { background: linear-gradient(135deg, #25D366, #128C7E); }
-
-        .fab-label {
-            position: absolute;
-            right: 80px;
-            background: rgba(15, 23, 42, 0.9);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 12px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            white-space: nowrap;
-            opacity: 0;
-            pointer-events: none;
-            transition: all 0.3s ease;
-            box-shadow: var(--shadow-sm);
-            transform: translateX(10px);
-        }
-
-        .fab-btn:hover { transform: scale(1.1) translateY(-5px); }
-        .fab-btn:hover .fab-label { opacity: 1; transform: translateX(0); }
-
-        /* Cookie Banner Améliorée */
-        .cookie-banner {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: var(--glass);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-top: 1px solid var(--border);
-            padding: 20px;
-            box-shadow: 0 -10px 30px rgba(0,0,0,0.1);
-            z-index: 9999;
-            transform: translateY(100%);
-            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex;
-            justify-content: center;
-        }
-        
-        .cookie-banner.show {
-            transform: translateY(0);
-        }
-
-        .cookie-content {
-            max-width: 1200px;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        .cookie-content p {
-            margin: 0;
-            font-size: 0.95rem;
-            color: var(--text);
-            flex: 1;
-            min-width: 280px;
-        }
-
-        .cookie-content a {
-            color: var(--secondary);
-            font-weight: 700;
-            text-decoration: none;
-        }
-
-        .cookie-buttons {
-            display: flex;
-            gap: 15px;
-        }
-
-        .btn-outline {
-            background: transparent;
-            border: 2px solid var(--light-text);
-            color: var(--text);
-            padding: 10px 24px;
-            border-radius: 100px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .btn-outline:hover {
-            background: rgba(0,0,0,0.05);
-            border-color: var(--text);
-        }
-
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            padding: 160px 20px 80px;
-            display: flex;
-            align-items: center;
-            background: radial-gradient(circle at top right, rgba(0, 198, 255, 0.1), transparent 50%),
-                        radial-gradient(circle at bottom left, rgba(0, 114, 255, 0.1), transparent 50%);
-        }
-        
-        .hero-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-        }
-
-        .hero-text h1 {
-            font-size: 3.5rem;
-            font-weight: 900;
-            line-height: 1.1;
-            color: var(--primary);
-            margin-bottom: 20px;
-            letter-spacing: -1px;
-        }
-        .hero-text h1 span {
-            background: linear-gradient(135deg, var(--secondary), var(--accent));
+        .text-gradient {
+            background: linear-gradient(135deg, #000080 0%, #0072FF 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        .hero-text p { font-size: 1.2rem; color: var(--light-text); margin-bottom: 35px; }
-        
-        .hero-buttons { display: flex; gap: 15px; flex-wrap: wrap; justify-content: flex-start; }
-
-        .hero-image img {
-            width: 100%;
-            border-radius: 32px;
-            box-shadow: var(--shadow-lg);
-            transition: transform 0.5s ease;
-        }
-        .hero-image:hover img { transform: translateY(-10px); }
-
-        /* Section Spécialisée */
-        .specialization {
-            background: white;
-            padding: 60px 30px;
-            border-radius: 40px;
-            margin: 0 20px;
-            text-align: center;
-            box-shadow: var(--shadow-sm);
-        }
-        .specialization h2 { font-size: 2rem; color: var(--primary); font-weight: 800; margin-bottom: 15px; }
-        .spec-grid { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 30px; }
-        .spec-tag {
-            padding: 12px 25px; background: white; border-radius: 50px; font-weight: 700;
-            display: flex; align-items: center; gap: 10px; box-shadow: var(--shadow-sm);
-            border: 2px solid transparent; transition: transform 0.3s, box-shadow 0.3s;
-        }
-        
-        .spec-tag.kine { color: var(--color-kine); border-color: var(--color-kine); background: rgba(16, 185, 129, 0.05); }
-        .spec-tag.ortho { color: var(--color-ortho); border-color: var(--color-ortho); background: rgba(139, 92, 246, 0.05); }
-        .spec-tag.psycho { color: var(--color-psycho); border-color: var(--color-psycho); background: rgba(245, 158, 11, 0.05); }
-        .spec-tag.reeduc { color: var(--color-reeduc); border-color: var(--color-reeduc); background: rgba(244, 63, 94, 0.05); }
-        .spec-tag:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
-
-        /* Features */
-        .section { padding: 100px 20px; max-width: 1200px; margin: 0 auto; }
-        .section-header { text-align: center; margin-bottom: 60px; }
-        .section-header h2 { font-size: 2.8rem; font-weight: 800; color: var(--primary); letter-spacing: -1px; }
-        .section-header p { font-size: 1.2rem; color: var(--light-text); max-width: 700px; margin: 15px auto 0; }
-
-        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        .feature-card {
-            background: white; padding: 40px 30px; border-radius: 30px; border: 1px solid var(--border);
-            text-align: center; transition: 0.3s; box-shadow: var(--shadow-sm);
-        }
-        .feature-card:hover { transform: translateY(-10px); box-shadow: var(--shadow-lg); border-color: var(--accent); }
-        
-        .feature-icon {
-            width: 70px; height: 70px; color: white; border-radius: 20px;
-            display: flex; align-items: center; justify-content: center; font-size: 1.8rem;
-            margin: 0 auto 20px; box-shadow: var(--shadow-sm); transition: transform 0.3s;
-        }
-        .feature-card:hover .feature-icon { transform: scale(1.1) rotate(5deg); }
-
-        .feature-card:nth-child(1) .feature-icon { background: var(--icon-grad-1); box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3); }
-        .feature-card:nth-child(2) .feature-icon { background: var(--icon-grad-2); box-shadow: 0 10px 20px rgba(78, 101, 255, 0.3); }
-        .feature-card:nth-child(3) .feature-icon { background: var(--icon-grad-3); box-shadow: 0 10px 20px rgba(17, 153, 142, 0.3); }
-        .feature-card:nth-child(4) .feature-icon { background: var(--icon-grad-4); box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3); }
-        .feature-card:nth-child(5) .feature-icon { background: var(--icon-grad-5); box-shadow: 0 10px 20px rgba(247, 151, 30, 0.3); }
-        .feature-card:nth-child(6) .feature-icon { background: var(--icon-grad-6); box-shadow: 0 10px 20px rgba(236, 0, 140, 0.3); }
-
-        .feature-card h4 { font-size: 1.4rem; color: var(--text); margin-bottom: 15px; font-weight: 800; }
-        .feature-card p { color: var(--light-text); font-size: 0.95rem; }
-
-        /* Showcase */
-        .showcase-grid { display: grid; grid-template-columns: 1fr; gap: 60px; }
-        .showcase-item {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;
-            background: var(--surface); padding: 40px; border-radius: 40px;
-            box-shadow: var(--shadow-sm); border: 1px solid var(--border);
-        }
-        .showcase-item.reverse { direction: rtl; }
-        .showcase-item.reverse > * { direction: ltr; }
-        .showcase-img img { width: 100%; border-radius: 24px; box-shadow: var(--shadow-lg); transition: 0.3s; }
-        .showcase-img img:hover { transform: scale(1.02); }
-        
-        .showcase-content h3 { font-size: 2rem; color: var(--primary); font-weight: 800; margin-bottom: 20px; }
-        .showcase-content p { color: var(--light-text); font-size: 1.1rem; margin-bottom: 20px; }
-
-        /* Footer */
-        footer { background: white; padding: 80px 20px 40px; border-top: 1px solid #e2e8f0; }
-        .footer-content { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; }
-        .footer-brand h2 { color: var(--primary); font-weight: 900; margin-bottom: 15px; display: flex; align-items: center; gap: 10px;}
-        .footer-brand img { width: 30px; border-radius: 8px; }
-        .footer-links h4 { color: var(--text); font-weight: 800; margin-bottom: 20px; }
-        .footer-links ul { list-style: none; }
-        .footer-links ul li { margin-bottom: 12px; }
-        .footer-links ul li a { text-decoration: none; color: var(--light-text); font-weight: 500; transition: color 0.3s; }
-        .footer-links ul li a:hover { color: var(--secondary); }
-        .footer-bottom { text-align: center; padding-top: 30px; color: var(--light-text); font-size: 0.9rem; border-top: 1px solid #f1f5f9; margin-top: 40px;}
-
-        /* Media Queries */
-        @media (max-width: 968px) {
-            nav { flex-direction: column; border-radius: 20px; padding: 15px; gap: 15px; }
-            .nav-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; width: 100%; }
-            .nav-links a.btn-primary { width: 100%; margin-top: 10px; }
-            .hero { padding: 220px 20px 60px; }
-            .hero-container { grid-template-columns: 1fr; text-align: center; gap: 40px; }
-            .hero-buttons { justify-content: center; }
-            .showcase-item, .showcase-item.reverse { grid-template-columns: 1fr; text-align: center; direction: ltr; }
-            .footer-content { grid-template-columns: 1fr; text-align: center; }
-            .footer-brand h2 { justify-content: center; }
-            .fab-container { bottom: 20px; right: 20px; transform: scale(0.9); transform-origin: bottom right; }
-            
-            .cookie-content { flex-direction: column; text-align: center; }
-            .cookie-buttons { width: 100%; justify-content: center; }
-        }
-
-        @media (max-width: 576px) {
-            .hero-text h1 { font-size: 2.2rem; }
-            .hero-text p { font-size: 1rem; }
-            .section-header h2 { font-size: 2rem; }
-            .section { padding: 60px 15px; }
-            .features-grid { grid-template-columns: 1fr; }
-            .feature-card { padding: 30px 20px; }
-            .specialization { padding: 40px 15px; margin: 0 10px; }
-            .spec-tag { width: 100%; justify-content: center; }
-            .hero-buttons a { width: 100%; text-align: center; }
-            .showcase-item { padding: 25px 15px; border-radius: 25px; }
-            .showcase-content h3 { font-size: 1.6rem; }
-            .fab-container { transform: scale(0.8); bottom: 10px; right: 10px; }
-        }
     </style>
-
-    <!-- Meta Pixel Code -->
-    <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '1431665208649121');
-    fbq('track', 'PageView');
-    </script>
-    <noscript><img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=1431665208649121&ev=PageView&noscript=1"
-    /></noscript>
-    <!-- End Meta Pixel Code -->
-
 </head>
-<body>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased">
 
-    <!-- Cookie Banner -->
-    <div id="cookie-banner" class="cookie-banner">
-        <div class="cookie-content">
-            <p>🍪 Ce site utilise des cookies (notamment via le Pixel Facebook) pour améliorer votre expérience, analyser notre trafic et vous proposer des offres adaptées. Consultez notre <a href="policy.html">Politique de confidentialité</a>.</p>
-            <div class="cookie-buttons">
-                <button id="decline-cookies" class="btn-outline">Refuser</button>
-                <button id="accept-cookies" class="btn-primary" style="padding: 10px 24px; font-size: 1rem;">Accepter</button>
+    <nav class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-slate-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex items-center gap-3">
+                    <div class="bg-white p-1 rounded-xl shadow-md shadow-blueElectric/10 border border-slate-100">
+                        <img src="icon.png" alt="Logo ReedixPulse" class="h-10 w-10 object-contain">
+                    </div>
+                    <div>
+                        <span class="text-2xl font-black tracking-tight text-navy">Reedix<span class="text-blueElectric">Pulse</span></span>
+                        <p class="text-[10px] text-slate-400 font-bold tracking-wider uppercase">Sastouka Digital</p>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center gap-8 font-semibold text-slate-600">
+                    <a href="#features" class="hover:text-navy transition">Fonctionnalités</a>
+                    <a href="#gallery" class="hover:text-navy transition">Aperçu</a>
+                    <a href="#architecture" class="hover:text-navy transition">Mode Local</a>
+                    <a href="#pricing" class="hover:text-navy transition">Licences</a>
+                    <a href="guide.html" class="text-blueElectric hover:underline flex items-center gap-2">
+                        <i class="fa-solid fa-book"></i> Guide d'utilisation
+                    </a>
+                </div>
+                <div class="flex items-center gap-4">
+                    <a href="https://wa.me/212652084735" target="_blank" class="gradient-bg text-white px-5 py-2.5 rounded-xl font-bold shadow-lg shadow-blueElectric/20 hover:opacity-90 transition flex items-center gap-2 text-sm">
+                        <i class="fa-brands fa-whatsapp text-lg"></i> Obtenir une clé
+                    </a>
+                </div>
             </div>
-        </div>
-    </div>
-
-    <!-- Floating Action Buttons -->
-    <div class="fab-container">
-        <a href="https://wa.me/212652084735" class="fab-btn fab-wa" title="Contactez-nous sur WhatsApp" onclick="fbq('track', 'Contact');">
-            <span class="fab-label">Contactez-nous</span>
-            <i class="fa-brands fa-whatsapp"></i>
-        </a>
-        <a href="https://github.com/Sastouka/ReedixPulse/releases/download/v1.0.0/ReedixPulse.zip" class="fab-btn fab-windows" title="Télécharger pour Windows" onclick="fbq('trackCustom', 'DownloadWindows');">
-            <span class="fab-label">Télécharger pour Windows</span>
-            <i class="fa-brands fa-windows"></i>
-        </a>
-        <a href="https://github.com/Sastouka/ReedixPulse/releases/download/v1.0.0/ReedixPulse.apk" class="fab-btn fab-android" title="Télécharger pour Android" onclick="fbq('trackCustom', 'DownloadAndroid');">
-            <span class="fab-label">Télécharger pour Android</span>
-            <i class="fa-brands fa-android"></i>
-        </a>
-    </div>
-
-    <!-- Navigation -->
-    <nav>
-        <a href="#" class="nav-logo">
-            <img src="icon.png" alt="ReedixPulse" onerror="this.style.display='none'">
-            ReedixPulse
-        </a>
-        <div class="nav-links">
-            <a href="#specialite">Votre Spécialité</a>
-            <a href="#fonctionnalites">Fonctionnalités</a>
-            <a href="guide.html">Guide</a>
-            <a href="https://wa.me/212652084735" class="btn-primary" onclick="fbq('track', 'Lead');">Obtenir la licence</a>
         </div>
     </nav>
 
-    <!-- Header Section -->
-    <section class="hero">
-        <div class="hero-container">
-            <div class="hero-text">
-                <h1>L'excellence du suivi <span>par séances.</span></h1>
-                <p>La solution logicielle sur-mesure pour les centres de rééducation. Gérez vos patients, vos forfaits de séances et votre facturation avec une précision inégalée.</p>
-                <div class="hero-buttons">
-                    <a href="https://wa.me/212652084735" class="btn-primary" style="font-size: 1.1rem; padding: 16px 35px;" onclick="fbq('track', 'Lead');"><i class="fa-solid fa-rocket" style="margin-right: 8px;"></i> Démarrer maintenant</a>
-                    <a href="guide.html" class="btn-primary" style="background: white; color: var(--primary) !important; border: 2px solid #e2e8f0; box-shadow: none;">Voir le guide</a>
+    <header class="relative overflow-hidden bg-white pt-16 pb-20 lg:pt-24 lg:pb-28 border-b border-slate-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="lg:grid lg:grid-cols-12 lg:gap-12 items-center">
+                <div class="sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6 lg:text-left">
+                    <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-heavy bg-blue-50 text-blueElectric font-bold mb-6">
+                        <i class="fa-solid fa-star"></i> Solution Premium Multi-comptes
+                    </span>
+                    <h1 class="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight leading-none mb-6">
+                        Pilotez votre centre <br class="hidden sm:inline">
+                        <span class="text-gradient">Médico-Socio-Éducatif</span> <br>
+                        avec fluidité absolue.
+                    </h1>
+                    <p class="text-lg text-slate-500 font-medium leading-relaxed mb-8">
+                        Conçu spécifiquement pour structurer l'activité des centres de psychomotricité, d'orthophonie et de kinésithérapie. Suivez vos agendas, optimisez vos facturations complexes et coordonnez vos équipes en toute sécurité.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                        <a href="guide.html" class="bg-slate-900 text-white px-8 py-4 rounded-xl font-bold shadow-lg hover:bg-slate-800 transition flex items-center justify-center gap-3">
+                            <i class="fa-solid fa-circle-play"></i> Découvrir le Guide
+                        </a>
+                        <a href="https://wa.me/212652084735" target="_blank" class="bg-white text-navy border-2 border-slate-200 px-8 py-4 rounded-xl font-bold hover:bg-slate-50 transition flex items-center justify-center gap-2">
+                            Contacter le support
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="mt-12 relative sm:max-w-lg sm:mx-auto lg:mt-0 lg:max-w-none lg:mx-0 lg:col-span-6 flex justify-center">
+                    <div class="w-full relative rounded-3xl shadow-2xl shadow-navy/20 border border-slate-200 overflow-hidden transform hover:-translate-y-2 transition duration-500">
+                        <img src="img1.png" alt="Interface Dashboard ReedixPulse" class="w-full h-auto object-cover">
+                    </div>
                 </div>
             </div>
-            <div class="hero-image">
-                <img src="img4.png" alt="Interface ReedixPulse">
+        </div>
+    </header>
+
+    <section id="features" class="py-20 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-3xl font-black text-slate-900 tracking-tight mb-4">Une gestion de pointe pensée pour votre quotidien</h2>
+                <p class="text-slate-500 font-medium">L'application intègre des modules spécialisés pour couvrir tous les aspects administratifs et cliniques de votre structure.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-2xl border border-slate-100 hover:shadow-xl hover:shadow-slate-100 transition">
+                    <div class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center text-blueElectric text-xl mb-6"><i class="fa-solid fa-calendar-check"></i></div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Agenda & Programmes Avancés</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed">Planifiez des rendez-vous uniques ou générez automatiquement des programmes complets sur plusieurs semaines. Gestion automatique des conflits d'horaires par praticien.</p>
+                </div>
+                <div class="bg-white p-8 rounded-2xl border border-slate-100 hover:shadow-xl hover:shadow-slate-100 transition">
+                    <div class="w-12 h-12 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 text-xl mb-6"><i class="fa-solid fa-hospital-user"></i></div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Dossiers & Fiches Patients</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed">Fiches complètes avec gestion de l'âge, du sexe, des coordonnées, antécédents médicaux et rattachement à des organismes partenaires, assurances ou mutuelles.</p>
+                </div>
+                <div class="bg-white p-8 rounded-2xl border border-slate-100 hover:shadow-xl hover:shadow-slate-100 transition">
+                    <div class="w-12 h-12 rounded-xl bg-teal-50 flex items-center justify-center text-teal-600 text-xl mb-6"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Facturation PDF & Avances</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed">Générez des factures professionnelles avec calcul automatique de la TVA. Suivez le portefeuille d'avances perçues par patient pour déduire les montants en temps réel.</p>
+                </div>
+                <div class="bg-white p-8 rounded-2xl border border-slate-100 hover:shadow-xl hover:shadow-slate-100 transition">
+                    <div class="w-12 h-12 rounded-xl bg-purple-50 flex items-center justify-center text-purple-600 text-xl mb-6"><i class="fa-solid fa-user-shield"></i></div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Droits d'Accès Collaborateurs</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed">Attribuez des profils spécifiques (Administrateur, Assistant, Praticien) et configurez précisément leurs permissions (accès à l'agenda, à la facturation ou aux rapports).</p>
+                </div>
+                <div class="bg-white p-8 rounded-2xl border border-slate-100 hover:shadow-xl hover:shadow-slate-100 transition">
+                    <div class="w-12 h-12 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600 text-xl mb-6"><i class="fa-solid fa-chart-line"></i></div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Statistiques & Rapports</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed">Consultez l'historique complet des encaissements, suivez le volume d'activité global de votre centre ainsi que la répartition par prestations de soins.</p>
+                </div>
+                <div class="bg-white p-8 rounded-2xl border border-slate-100 hover:shadow-xl hover:shadow-slate-100 transition">
+                    <div class="w-12 h-12 rounded-xl bg-rose-50 flex items-center justify-center text-rose-600 text-xl mb-6"><i class="fa-solid fa-folder-open"></i></div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Dossiers de Pièces Jointes</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed">Associez des documents numérisés, des ordonnances ou des photos médicales directement aux dossiers de vos programmes patients grâce à l'appareil photo.</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Spécialité Section -->
-    <section id="specialite" class="specialization">
-        <h2>Une solution pensée pour vos métiers</h2>
-        <p style="color: var(--light-text); font-size: 1.1rem; max-width: 600px; margin: 0 auto;">ReedixPulse a été spécifiquement conçu pour répondre aux besoins des professionnels de santé fonctionnant par forfaits de séances.</p>
-        <div class="spec-grid">
-            <div class="spec-tag kine"><i class="fa-solid fa-person-walking"></i> Kinésithérapie</div>
-            <div class="spec-tag ortho"><i class="fa-solid fa-head-side-medical"></i> Orthophonie</div>
-            <div class="spec-tag psycho"><i class="fa-solid fa-child-reaching"></i> Psychomotricité</div>
-            <div class="spec-tag reeduc"><i class="fa-solid fa-wheelchair"></i> Rééducation Fonctionnelle</div>
-        </div>
-    </section>
-
-    <!-- Info Section 1 -->
-    <section class="section">
-        <div class="showcase-grid">
-            <div class="showcase-item">
-                <div class="showcase-content">
-                    <h3>Marre du chaos administratif ?</h3>
-                    <p>La gestion manuelle de vos forfaits de séances vous fait perdre un temps précieux. Fini les rendez-vous oubliés, les calculs d'avances complexes et les dossiers désorganisés.</p>
-                    <p><strong>ReedixPulse centralise tout votre flux de travail</strong>, du premier rendez-vous jusqu'à la facture globale en fin de traitement.</p>
-                    <a href="#fonctionnalites" class="btn-primary" style="margin-top: 15px;">Découvrir comment</a>
-                </div>
-                <div class="showcase-img">
-                    <img src="img2.png" alt="Fini le chaos avec ReedixPulse">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Fonctionnalités Section -->
-    <section id="fonctionnalites" class="section" style="background: white; border-radius: 60px; box-shadow: var(--shadow-sm); padding-top: 80px;">
-        <div class="section-header">
-            <h2>Tout pour votre centre</h2>
-            <p>Un écosystème d'outils puissants dédiés au suivi de vos patients avec un code couleur intuitif.</p>
-        </div>
-        
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fa-solid fa-layer-group"></i></div>
-                <h4>Facturation par Séances</h4>
-                <p>Sélectionnez les dates de rendez-vous depuis le calendrier et générez une facture groupée automatiquement avec calcul HT/TTC.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fa-solid fa-wallet"></i></div>
-                <h4>Gestion des Avances</h4>
-                <p>Suivez les paiements anticipés (portefeuille patient) et déduisez-les en un seul clic lors de la facturation finale du traitement.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fa-brands fa-whatsapp"></i></div>
-                <h4>Rappels Automatiques</h4>
-                <p>Réduisez l'absentéisme avec des rappels de rendez-vous envoyés directement sur le mobile du patient via WhatsApp ou SMS.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fa-solid fa-shield-halved"></i></div>
-                <h4>Sécurité 100% Locale</h4>
-                <p>Vos données médicales restent physiquement sur votre appareil. Zéro cloud, pour une conformité totale au secret médical.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fa-solid fa-chart-line"></i></div>
-                <h4>Analyses de Rentabilité</h4>
-                <p>Visualisez vos revenus par type de prestation (Kiné, Orthophonie...) en temps réel avec des graphiques interactifs.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fa-solid fa-file-pdf"></i></div>
-                <h4>PDF Personnalisés</h4>
-                <p>Générez vos factures et rapports financiers en intégrant directement votre propre papier à en-tête professionnel.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Info Section 2 -->
-    <section class="section">
-        <div class="showcase-grid">
-            <div class="showcase-item reverse" style="background: transparent; border: none; box-shadow: none;">
-                <div class="showcase-content">
-                    <h3>Disponible sur Windows & Android</h3>
-                    <p>Que vous soyez à l'accueil sur le PC du cabinet ou en salle de soin avec votre tablette, ReedixPulse s'adapte à votre matériel.</p>
-                    <p>Un design <strong>Responsive et Fluide</strong> qui rend l'expérience utilisateur exceptionnelle sur tous les supports.</p>
-                    <a href="https://wa.me/212652084735" class="btn-primary" style="margin-top: 15px;" onclick="fbq('track', 'Lead');"><i class="fa-solid fa-download" style="margin-right: 8px;"></i> Obtenir la solution</a>
-                </div>
-                <div class="showcase-img">
-                    <img src="img1.png" alt="ReedixPulse multiplateforme">
-                </div>
+    <section id="gallery" class="py-20 bg-white border-y border-slate-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-3xl font-black text-slate-900 tracking-tight mb-4">Une interface claire et intuitive</h2>
+                <p class="text-slate-500 font-medium">Découvrez l'environnement de travail de ReedixPulse conçu pour une prise en main immédiate et un grand confort d'utilisation au quotidien.</p>
             </div>
             
-            <div class="showcase-item">
-                <div class="showcase-content">
-                    <h3>Des statistiques claires</h3>
-                    <p>Prenez des décisions éclairées grâce au tableau de bord. Suivez vos KPI essentiels : Chiffre d'affaires, panier moyen, et répartition des consultations.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="rounded-2xl overflow-hidden shadow-lg shadow-slate-200/50 border border-slate-200 group">
+                    <img src="img2.png" alt="Aperçu de l'application - Capture 2" class="w-full h-auto transform group-hover:scale-105 transition duration-500 object-cover">
                 </div>
-                <div class="showcase-img">
-                    <img src="img3.png" alt="Statistiques ReedixPulse">
+                <div class="rounded-2xl overflow-hidden shadow-lg shadow-slate-200/50 border border-slate-200 group">
+                    <img src="img3.png" alt="Aperçu de l'application - Capture 3" class="w-full h-auto transform group-hover:scale-105 transition duration-500 object-cover">
+                </div>
+                <div class="rounded-2xl overflow-hidden shadow-lg shadow-slate-200/50 border border-slate-200 group">
+                    <img src="img4.png" alt="Aperçu de l'application - Capture 4" class="w-full h-auto transform group-hover:scale-105 transition duration-500 object-cover">
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-brand">
-                <h2><img src="icon.png" alt="Logo" onerror="this.style.display='none'"> ReedixPulse</h2>
-                <p>Édité par Sastouka Digital.<br>La solution logicielle premium qui fait la différence pour les professionnels de santé au Maroc.</p>
-            </div>
-            
-            <div class="footer-links">
-                <h4>Ressources</h4>
-                <ul>
-                    <li><a href="guide.html"><i class="fa-solid fa-book" style="width: 20px;"></i> Guide d'utilisation</a></li>
-                    <li><a href="https://wa.me/212652084735" onclick="fbq('track', 'Contact');"><i class="fa-brands fa-whatsapp" style="width: 20px;"></i> Support Technique</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-links">
-                <h4>Légal & Sécurité</h4>
-                <ul>
-                    <li><a href="policy.html"><i class="fa-solid fa-user-shield" style="width: 20px;"></i> Politique (CNDP/RGPD)</a></li>
-                    <li><a href="cgu.html"><i class="fa-solid fa-scale-balanced" style="width: 20px;"></i> CGU</a></li>
-                </ul>
+    <section id="architecture" class="py-20 bg-slate-900 text-white relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
+                <div>
+                    <span class="text-xs font-bold text-blueElectric tracking-widest uppercase block mb-3">Zéro dépendance Internet</span>
+                    <h2 class="text-3xl font-black tracking-tight mb-6 sm:text-4xl">
+                        Fonctionnement en réseau local synchronisé <br>
+                        (Mode Client / Serveur)
+                    </h2>
+                    <p class="text-slate-400 font-medium leading-relaxed mb-6">
+                        ReedixPulse intègre une architecture réseau unique. Vous pouvez définir un ordinateur principal comme **Serveur Central** au sein du centre et y connecter instantanément des tablettes ou ordinateurs secondaires (**Mode Client**).
+                    </p>
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-3">
+                            <div class="mt-1 text-emerald-400 text-lg"><i class="fa-solid fa-circle-check"></i></div>
+                            <p class="text-slate-300 text-sm font-semibold">Base de données unifiée et sécurisée sur votre propre matériel.</p>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="mt-1 text-emerald-400 text-lg"><i class="fa-solid fa-circle-check"></i></div>
+                            <p class="text-slate-300 text-sm font-semibold">Les données se synchronisent instantanément entre l'accueil et les salles de consultation.</p>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="mt-1 text-emerald-400 text-lg"><i class="fa-solid fa-circle-check"></i></div>
+                            <p class="text-slate-300 text-sm font-semibold">Parfaite continuité de service même en cas de coupure de votre connexion internet externe.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-12 lg:mt-0 bg-slate-800 p-8 rounded-3xl border border-slate-700 shadow-2xl relative">
+                    <div class="absolute top-0 right-0 transform translate-x-4 -translate-y-4 w-24 h-24 bg-blueElectric/10 rounded-full blur-2xl"></div>
+                    <h3 class="text-lg font-bold mb-4 flex items-center gap-2 text-blueElectric">
+                        <i class="fa-solid fa-network-wired"></i> Schéma de Synchronisation Locale
+                    </h3>
+                    <div class="space-y-4 font-mono text-xs">
+                        <div class="p-3 bg-slate-900 rounded-xl border border-slate-700 flex items-center gap-3">
+                            <i class="fa-solid fa-desktop text-xl text-indigo-400"></i>
+                            <div>
+                                <p class="text-white font-bold">PC SERVEUR PRINCIPAL</p>
+                                <p class="text-slate-400 font-medium">Héberge la base SQLite unifiée</p>
+                            </div>
+                        </div>
+                        <div class="flex justify-center my-2 text-slate-500"><i class="fa-solid fa-arrows-up-down text-lg animate-bounce"></i></div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="p-3 bg-slate-900 rounded-xl border border-slate-700 flex items-center gap-3">
+                                <i class="fa-solid fa-tablet-screen-button text-xl text-teal-400"></i>
+                                <div>
+                                    <p class="text-white font-bold">Tablette Client</p>
+                                    <p class="text-slate-500">Poste Accueil</p>
+                                </div>
+                            </div>
+                            <div class="p-3 bg-slate-900 rounded-xl border border-slate-700 flex items-center gap-3">
+                                <i class="fa-solid fa-user-doctor text-xl text-purple-400"></i>
+                                <div>
+                                    <p class="text-white font-bold">Poste Client</p>
+                                    <p class="text-slate-500">Consultation</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        
-        <div class="footer-bottom">
-            &copy; 2026 Sastouka Digital. Tous droits réservés.
+    </section>
+
+    <section id="pricing" class="py-20 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-3xl font-black text-slate-900 tracking-tight mb-4">Plans de Licence & Activation</h2>
+                <p class="text-slate-500 font-medium">Activez votre application en toute sécurité grâce à notre console de génération de clés cryptographiques fournies par Sastouka Digital.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <div class="bg-white p-8 rounded-3xl border border-slate-200/60 shadow-xl shadow-slate-100 relative flex flex-col justify-between">
+                    <div>
+                        <span class="text-xs font-bold text-slate-400 tracking-widest uppercase block mb-4">Accès Court Terme</span>
+                        <h3 class="text-xl font-bold text-slate-900 mb-2">PLAN MENSUEL</h3>
+                        <p class="text-slate-500 text-xs mb-6">Idéal pour évaluer l'outil en conditions réelles ou pour des besoins ponctuels.</p>
+                        <div class="border-t border-slate-100 pt-6 space-y-3 mb-8">
+                            <div class="flex items-center gap-2.5 text-sm text-slate-600 font-medium"><i class="fa-solid fa-check text-blueElectric"></i> Accès complet pendant 30 jours</div>
+                            <div class="flex items-center gap-2.5 text-sm text-slate-600 font-medium"><i class="fa-solid fa-check text-blueElectric"></i> Mises à jour incluses</div>
+                            <div class="flex items-center gap-2.5 text-sm text-slate-600 font-medium"><i class="fa-solid fa-check text-blueElectric"></i> Support par email</div>
+                        </div>
+                    </div>
+                    <a href="https://wa.me/212652084735" target="_blank" class="w-full text-center py-3 bg-slate-50 hover:bg-slate-100 text-navy font-bold rounded-xl transition text-sm">Prendre ce plan</a>
+                </div>
+
+                <div class="bg-white p-8 rounded-3xl border-2 border-blueElectric shadow-xl shadow-blueElectric/5 relative flex flex-col justify-between transform lg:-translate-y-2">
+                    <span class="absolute top-0 right-1/2 transform translate-x-1/2 -translate-y-1/2 px-3 py-1 bg-blueElectric text-white text-[10px] font-black tracking-widest rounded-full uppercase">Recommandé</span>
+                    <div>
+                        <span class="text-xs font-bold text-blueElectric tracking-widest uppercase block mb-4">Sérénité Totale</span>
+                        <h3 class="text-xl font-bold text-slate-900 mb-2">PLAN ANNUEL</h3>
+                        <p class="text-slate-500 text-xs mb-6">Le choix parfait pour la stabilité de gestion annuelle de votre cabinet.</p>
+                        <div class="border-t border-slate-100 pt-6 space-y-3 mb-8">
+                            <div class="flex items-center gap-2.5 text-sm text-slate-600 font-medium"><i class="fa-solid fa-check text-blueElectric"></i> Accès complet pendant 365 jours</div>
+                            <div class="flex items-center gap-2.5 text-sm text-slate-600 font-medium"><i class="fa-solid fa-check text-blueElectric"></i> Support prioritaire WhatsApp</div>
+                            <div class="flex items-center gap-2.5 text-sm text-slate-600 font-medium"><i class="fa-solid fa-check text-blueElectric"></i> Économie importante sur l'année</div>
+                        </div>
+                    </div>
+                    <a href="https://wa.me/212652084735" target="_blank" class="w-full text-center py-3 gradient-bg text-white font-bold rounded-xl shadow-lg shadow-blueElectric/20 hover:opacity-95 transition text-sm">Prendre ce plan</a>
+                </div>
+
+                <div class="bg-white p-8 rounded-3xl border border-slate-200/60 shadow-xl shadow-slate-100 relative flex flex-col justify-between">
+                    <div>
+                        <span class="text-xs font-bold text-orange-500 tracking-widest uppercase block mb-4">Investissement Définitif</span>
+                        <h3 class="text-xl font-bold text-slate-900 mb-2">PLAN À VIE</h3>
+                        <p class="text-slate-500 text-xs mb-6">Libérez-vous définitivement des abonnements récurrents.</p>
+                        <div class="border-t border-slate-100 pt-6 space-y-3 mb-8">
+                            <div class="flex items-center gap-2.5 text-sm text-slate-600 font-medium"><i class="fa-solid fa-check text-orange-500"></i> Accès illimité sans fin de validité</div>
+                            <div class="flex items-center gap-2.5 text-sm text-slate-600 font-medium"><i class="fa-solid fa-check text-orange-500"></i> Partage de licence Admin inclus</div>
+                            <div class="flex items-center gap-2.5 text-sm text-slate-600 font-medium"><i class="fa-solid fa-check text-orange-500"></i> Sauvegarde Cloud illimitée</div>
+                        </div>
+                    </div>
+                    <a href="https://wa.me/212652084735" target="_blank" class="w-full text-center py-3 bg-slate-50 hover:bg-slate-100 text-navy font-bold rounded-xl transition text-sm">Prendre ce plan</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center border-b border-slate-800 pb-8 mb-8 gap-6">
+                <div class="flex items-center gap-3">
+                    <div class="bg-white p-1 rounded-xl">
+                        <img src="icon.png" alt="Logo ReedixPulse" class="h-8 w-8 object-contain">
+                    </div>
+                    <span class="text-xl font-black tracking-tight text-white">Reedix<span class="text-blueElectric">Pulse</span></span>
+                </div>
+                <div class="flex flex-wrap justify-center gap-6 font-semibold text-sm text-slate-400">
+                    <a href="guide.html" class="hover:text-white transition">Guide Utilisateur</a>
+                    <a href="cgu.html" class="hover:text-white transition">CGU</a>
+                    <a href="policy.html" class="hover:text-white transition">Confidentialité</a>
+                </div>
+            </div>
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-xs">
+                <p>&copy; 2026 ReedixPulse. Tous droits réservés.</p>
+                <p class="font-bold tracking-wide">Développé avec excellence par <span class="text-white font-black">Sastouka Digital</span></p>
+            </div>
         </div>
     </footer>
-
-    <!-- Script pour la gestion de l'alerte cookies -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const cookieBanner = document.getElementById("cookie-banner");
-            const acceptBtn = document.getElementById("accept-cookies");
-            const declineBtn = document.getElementById("decline-cookies");
-
-            // Fonction pour cacher complètement la bannière du DOM après l'animation
-            function hideBanner() {
-                cookieBanner.classList.remove("show");
-                // On attend 500ms (la durée de la transition CSS) avant de la faire disparaître du flux HTML
-                setTimeout(() => {
-                    cookieBanner.style.display = "none";
-                }, 500);
-            }
-
-            // Vérifie si l'utilisateur a déjà répondu
-            if (!localStorage.getItem("cookieConsent")) {
-                setTimeout(() => {
-                    cookieBanner.classList.add("show");
-                }, 1000);
-            } else {
-                // Si déjà accepté ou refusé avant, on la cache directement
-                cookieBanner.style.display = "none";
-            }
-
-            // Action "Accepter"
-            acceptBtn.addEventListener("click", function() {
-                localStorage.setItem("cookieConsent", "accepted");
-                hideBanner();
-            });
-
-            // Action "Refuser"
-            declineBtn.addEventListener("click", function() {
-                localStorage.setItem("cookieConsent", "declined");
-                hideBanner();
-            });
-        });
-    </script>
 
 </body>
 </html>
