@@ -28,8 +28,24 @@
             -webkit-text-fill-color: transparent;
         }
     </style>
-</head>
-<body class="bg-slate-50 text-slate-800 font-sans antialiased">
+
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1431665208649121');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1431665208649121&ev=PageView&noscript=1"
+    /></noscript>
+    </head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased overflow-x-hidden">
 
     <nav class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-slate-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -53,7 +69,7 @@
                     </a>
                 </div>
                 <div class="flex items-center gap-4">
-                    <a href="https://wa.me/212652084735" target="_blank" class="gradient-bg text-white px-5 py-2.5 rounded-xl font-bold shadow-lg shadow-blueElectric/20 hover:opacity-90 transition flex items-center gap-2 text-sm">
+                    <a href="https://wa.me/212652084735" target="_blank" class="gradient-bg text-white px-5 py-2.5 rounded-xl font-bold shadow-lg shadow-blueElectric/20 hover:opacity-90 transition flex items-center gap-2 text-sm" onclick="fbq('track', 'Lead');">
                         <i class="fa-brands fa-whatsapp text-lg"></i> Obtenir une clé
                     </a>
                 </div>
@@ -80,7 +96,7 @@
                         <a href="guide.html" class="bg-slate-900 text-white px-8 py-4 rounded-xl font-bold shadow-lg hover:bg-slate-800 transition flex items-center justify-center gap-3">
                             <i class="fa-solid fa-circle-play"></i> Découvrir le Guide
                         </a>
-                        <a href="https://wa.me/212652084735" target="_blank" class="bg-white text-navy border-2 border-slate-200 px-8 py-4 rounded-xl font-bold hover:bg-slate-50 transition flex items-center justify-center gap-2">
+                        <a href="https://wa.me/212652084735" target="_blank" class="bg-white text-navy border-2 border-slate-200 px-8 py-4 rounded-xl font-bold hover:bg-slate-50 transition flex items-center justify-center gap-2" onclick="fbq('track', 'Contact');">
                             Contacter le support
                         </a>
                     </div>
@@ -296,6 +312,66 @@
             </div>
         </div>
     </footer>
+
+    <div class="fixed bottom-6 right-6 flex flex-col gap-4 z-[2000]">
+        <a href="https://wa.me/212652084735" class="w-14 h-14 rounded-full flex items-center justify-center text-white shadow-lg transition-transform duration-300 hover:scale-110 relative group bg-gradient-to-br from-[#25D366] to-[#128C7E]" title="Contactez-nous sur WhatsApp" onclick="fbq('track', 'Contact');">
+            <span class="absolute right-16 bg-slate-900 text-white px-4 py-2 rounded-xl text-sm font-bold whitespace-nowrap opacity-0 group-hover:opacity-100 group-hover:translate-x-0 translate-x-2 transition-all duration-300 pointer-events-none shadow-md">Contactez-nous</span>
+            <i class="fa-brands fa-whatsapp text-2xl"></i>
+        </a>
+        <a href="https://github.com/Sastouka/ReedixPulse/releases/download/v1.0.0/ReedixPulse.zip" class="w-14 h-14 rounded-full flex items-center justify-center text-white shadow-lg transition-transform duration-300 hover:scale-110 relative group bg-gradient-to-br from-[#00a4ef] to-[#0072FF]" title="Télécharger pour Windows" onclick="fbq('trackCustom', 'DownloadWindows');">
+            <span class="absolute right-16 bg-slate-900 text-white px-4 py-2 rounded-xl text-sm font-bold whitespace-nowrap opacity-0 group-hover:opacity-100 group-hover:translate-x-0 translate-x-2 transition-all duration-300 pointer-events-none shadow-md">Télécharger pour Windows</span>
+            <i class="fa-brands fa-windows text-2xl"></i>
+        </a>
+        <a href="https://github.com/Sastouka/ReedixPulse/releases/download/v1.0.0/ReedixPulse.apk" class="w-14 h-14 rounded-full flex items-center justify-center text-white shadow-lg transition-transform duration-300 hover:scale-110 relative group bg-gradient-to-br from-[#a4c639] to-[#38ef7d]" title="Télécharger pour Android" onclick="fbq('trackCustom', 'DownloadAndroid');">
+            <span class="absolute right-16 bg-slate-900 text-white px-4 py-2 rounded-xl text-sm font-bold whitespace-nowrap opacity-0 group-hover:opacity-100 group-hover:translate-x-0 translate-x-2 transition-all duration-300 pointer-events-none shadow-md">Télécharger pour Android</span>
+            <i class="fa-brands fa-android text-2xl"></i>
+        </a>
+    </div>
+
+    <div id="cookie-banner" class="fixed bottom-0 left-0 w-full bg-white/95 backdrop-blur-md border-t border-slate-200 p-5 shadow-[0_-10px_30px_rgba(0,0,0,0.1)] z-[9999] translate-y-full" style="transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-sm font-medium text-slate-700 m-0 flex-1 min-w-[280px]">
+                🍪 Ce site utilise des cookies (notamment via le Pixel Facebook) pour améliorer votre expérience, analyser notre trafic et vous proposer des offres adaptées. Consultez notre <a href="policy.html" class="text-blueElectric font-bold hover:underline">Politique de confidentialité</a>.
+            </p>
+            <div class="flex gap-4">
+                <button id="decline-cookies" class="px-6 py-2.5 rounded-full border-2 border-slate-400 text-slate-700 font-bold hover:bg-slate-100 hover:border-slate-700 transition">Refuser</button>
+                <button id="accept-cookies" class="px-6 py-2.5 rounded-full bg-gradient-to-r from-navy to-blueElectric text-white font-bold shadow-lg hover:opacity-90 transition">Accepter</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const cookieBanner = document.getElementById("cookie-banner");
+            const acceptBtn = document.getElementById("accept-cookies");
+            const declineBtn = document.getElementById("decline-cookies");
+
+            function hideBanner() {
+                cookieBanner.classList.add("translate-y-full");
+                cookieBanner.classList.remove("translate-y-0");
+                setTimeout(() => { cookieBanner.style.display = "none"; }, 500);
+            }
+
+            if (!localStorage.getItem("cookieConsent")) {
+                setTimeout(() => {
+                    cookieBanner.classList.remove("translate-y-full");
+                    cookieBanner.classList.add("translate-y-0");
+                }, 1000);
+            } else {
+                cookieBanner.style.display = "none";
+            }
+
+            acceptBtn.addEventListener("click", function() {
+                localStorage.setItem("cookieConsent", "accepted");
+                hideBanner();
+            });
+
+            declineBtn.addEventListener("click", function() {
+                localStorage.setItem("cookieConsent", "declined");
+                hideBanner();
+            });
+        });
+    </script>
 
 </body>
 </html>
